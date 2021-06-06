@@ -11,8 +11,10 @@ class Solution(object):
         :type x: int
         :rtype: int
         """
-        ans = x
+        ans = x/2.0
         for i in range(30):
+            if ans == 0:
+                break
             ans = ans - (ans*ans-x)/(2*ans)
         return int(ans)
 # @lc code=end
