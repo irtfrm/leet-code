@@ -15,16 +15,15 @@ class Solution:
     def postorderTraversal(self, root: TreeNode) -> List[int]:
         stack = [root]
         ans = []
-        node = root
 
-        while node != None or len(stack) != 0:
-            while node.left != None:
+        while len(stack) != 0:
+            node = stack.pop()
+            if node != None:
+                ans.append(node.val)
                 stack.append(node.left)
-                node = node.left
-            if node.right != None:
-                node = node.right
+                stack.append(node.right)
 
-        return ans
+        return reversed(ans)
 
     def postorderTraversal2(self, root: TreeNode) -> List[int]:
         if root == None:
