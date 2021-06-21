@@ -7,6 +7,19 @@
 # @lc code=start
 class Solution:
     def majorityElement(self, nums: List[int]) -> int:
+        ans = None
+        count = 0
+        for num in nums:
+            if ans == num:
+                count += 1
+            elif count != 0:
+                count -= 1
+            else:
+                ans = num
+                count = 1
+        return ans
+
+    def majorityElement2(self, nums: List[int]) -> int:
         dct = {}
         for num in nums:
             if num in dct:
@@ -20,6 +33,5 @@ class Solution:
                 MAX = dct[num]
                 ans = num
         return ans
-
 # @lc code=end
 
