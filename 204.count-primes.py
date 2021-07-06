@@ -6,30 +6,17 @@
 
 # @lc code=start
 class Solution:
-    def __init__(self) -> None:
-        self.hash = {}
-    def isPrime(self, n: int) -> bool:
-        i = 2
-        ans = True
-        while i**2 <= n:
-            ans &= n % i != 0
-            i += 1
-        return ans
 
     def countPrimes(self, n: int) -> int:
         if n < 3:
             return 0
-        if n == 3 or n == 4:
-            return n-2
-        if n in self.hash:
-            return self.hash[n]
-        if n % 2 == 0:
-            ans = self.countPrimes(n - 2)
-            if self.isPrime(n-1):
-                ans += 1
-            self.hash[n] = ans
-        else:
-            ans = self.countPrimes(n - 1)
-        return ans
+
+        primes = [True] * n
+        primes[0] = False
+        primes[1] = False
+        for i in range(2, int(n ** 0.5) + 1):
+            if primes[i]:
+                primes[i * i: n: i] = [False] * len(primes[i * i: n: i])
+        return sum(primes)
 # @lc code=end
 
