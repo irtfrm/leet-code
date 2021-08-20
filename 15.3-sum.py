@@ -5,37 +5,29 @@
 #
 
 # @lc code=start
-class DoubleHash:
-    def __init__(self) -> None:
-        self.dct1 = {}
-    def add(self, key1, key2, val):
-        if not key1 in self.dct1:
-            self.dct1[key1] = {}
-        self.dct1[key1][key2] = val
-    def contains(self, key1, key2):
-        return key1 in self.dct1 and key2 in self.dct1[key1]
-
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        dct = {}
         ans = []
-        for k, num in enumerate(nums):
-            dct[-num] = k
-
-        blacklist = DoubleHash()
-        blacklist2 = DoubleHash()
+        nums.sort()
         for i in range(len(nums)):
-            for j in range(i + 1, len(nums)):
-                two_sum = nums[i] + nums[j]
-                if not blacklist.contains(i, j) and two_sum in dct and dct[two_sum] != i and dct[two_sum] != j:
-                    if blacklist2.contains(min(nums[i], nums[j], -(two_sum)), max(nums[i], nums[j], -(two_sum))):
-                        continue
-                    ans.append([nums[i], nums[j], -(two_sum)])
-                    k = dct[two_sum]
-                    blacklist.add(min(i, k), max(i, k), None)
-                    blacklist.add(min(j, k), max(j, k), None)
-                    blacklist2.add(min(nums[i], nums[j], -(two_sum)), max(nums[i], nums[j], -(two_sum)), None)
-        
+            l = i + 1
+            r = len(nums) - 1
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+
+            while l < r:
+                if nums[l] + nums[r] + nums[i] == 0:
+                    ans.append([nums[i], nums[l], nums[r]])
+                    curr_l = nums[l]
+                    curr_r = nums[r]
+                    while l < len(nums) and nums[l] == curr_l:
+                        l += 1
+                    while 0 <= r and nums[r] == curr_r:
+                        r -= 1
+                elif nums[l] + nums[r] + nums[i] > 0:
+                    r -= 1
+                else:
+                    l += 1
         return ans
 
 # @lc code=end
