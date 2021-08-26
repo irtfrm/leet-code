@@ -12,39 +12,17 @@
 #         self.next = None
 
 class Solution:
-    def findPre(self, head, target, maxTrav):
-        if target == head:
-            return None
-        node = head
-        i = 0
-        while node.next != target:
-            node = node.next
-            i += 1
-            if i >= 2 * maxTrav:
-                return None
-        return node
-
-    def isInCycle(self, target, maxTrav):
-        node = target.next
-        i = 0
-        while i < 2 * maxTrav:
-            if node == target:
-                return True
-            node = node.next
-            i += 1
-        return False
-
     def detectCycle(self, head: ListNode) -> ListNode:
         normal = head
         fast = head
         i = 0
         while fast != None and fast.next != None:
             if i > 0 and normal == fast:
-                while self.isInCycle(normal, i):
-                    normal = self.findPre(head, normal, i)
-                    if normal == None:
-                        return head
-                return normal.next
+                fast = head
+                while normal != fast:
+                    normal = normal.next
+                    fast = fast.next
+                return normal
             normal = normal.next
             fast = fast.next.next
             i += 1
