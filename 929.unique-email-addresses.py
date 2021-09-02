@@ -12,7 +12,6 @@ class Solution:
             local, host = email.split('@')
             local = local.split('+')[0]
             local = local.replace('.', '')
-            s.add(local + host)
+            s.add(local + '@' + host)
         return len(s)
 # @lc code=end
-
